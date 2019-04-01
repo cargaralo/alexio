@@ -62,17 +62,19 @@ let plateauContainer = document.querySelector("#plateau")
 chatInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
     channel.push("new_player", {player_name: chatInput.value})
-    localStorage.setItem('player_name', chatInput.value);
-    chatInput.value = ""
-    playerContainer.innerHTML = `Your name is <b>${localStorage.getItem('player_name')}</b>`
-    chatInput.remove()
+      .receive("ok", function(msg) {
+        localStorage.setItem('player_name', chatInput.value)
+        chatInput.value = ""
+        playerContainer.innerHTML = `Your name is <b>${localStorage.getItem('player_name')}</b>`
+        chatInput.remove()
+      })
+      .receive("error", (reasons) => alert("Username already owned") )
   }
 })
 
 channel.on("beat", payload => {
   let plateauItem = document.createElement("li")
   plateauContainer.innerHTML = `[${Date()}]</br> X: ${payload.x_size}</br> Y: ${payload.y_size}</br> Players: ${JSON.stringify(payload.players)}`
-  // messagesContainer.appendChild(messageItem)
 })
 
 channel.join()

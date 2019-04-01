@@ -20,8 +20,6 @@ defmodule Alexio.Plateau do
   end
 
   def player_name_owned?(plateau = %__MODULE__{}, player_name) do
-    # Map.has_key?(plateau.players, player_name)
-    #TODO
-    false
+    Map.has_key?(plateau.players, player_name)
   end
 end

@@ -11,8 +11,8 @@ defmodule AlexioWeb.RoomChannel do
 
   def handle_in("new_player", %{"player_name" => player_name}, socket) do
     case GenServer.call(Alexio.Beat, {:new_player, player_name}) do
-      :ok -> {:noreply, socket}
-      :error -> {:error, "User name already owned"}
+      :ok -> {:reply, :ok, socket}
+      :error -> {:reply, :error, socket}
     end
   end
 end
