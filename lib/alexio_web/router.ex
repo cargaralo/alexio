@@ -17,6 +17,7 @@ defmodule AlexioWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/test", PageController, :test
   end
 
   # Other scopes may use custom stacks.

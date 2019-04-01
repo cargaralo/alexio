@@ -9,7 +9,7 @@ defmodule Alexio.Application do
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      Alexio.Repo,
+      # Alexio.Repo,
       # Start the endpoint when the application starts
       AlexioWeb.Endpoint
       # Starts a worker by calling: Alexio.Worker.start_link(arg)
