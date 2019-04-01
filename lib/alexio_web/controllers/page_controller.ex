@@ -7,6 +7,6 @@ defmodule AlexioWeb.PageController do
 
   def test(conn, %{"body" => body}) do
     AlexioWeb.Endpoint.broadcast!("room:lobby", "new_msg", %{body: body})
-    json(conn,%{})
+    json(conn, %{})
   end
 end
