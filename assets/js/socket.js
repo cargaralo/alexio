@@ -66,8 +66,9 @@ chatInput.addEventListener("keypress", event => {
 })
 
 channel.on("new_msg", payload => {
+  console.log(payload)
   let messageItem = document.createElement("li")
-  messageItem.innerText = `[${Date()}] ${payload.plateau}`
+  messageItem.innerText = `[${Date()}] ${payload.players}`
   messagesContainer.appendChild(messageItem)
 })
 

@@ -3,21 +3,21 @@ defmodule Alexio.Beat do
 
   def init(_state) do
     reschedule()
-    {:ok, %{plateau: []}}
+    {:ok, Alexio.Plateau.init(10, 10)}
   end
 
   def start_link(_opts \\ []) do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  def handle_info(:beat, state) do
-    AlexioWeb.Endpoint.broadcast!("room:lobby", "new_msg", state)
+  def handle_info(:beat, plateau) do
+    AlexioWeb.Endpoint.broadcast!("room:lobby", "new_msg", plateau)
     reschedule()
-    {:noreply, state}
+    {:noreply, plateau}
   end
 
-  def handle_cast({:new_player, player_name}, state) do
-    {:noreply, %{plateau: [player_name | state.plateau]}}
+  def handle_cast({:new_player, player_name}, plateau) do
+    {:noreply, Alexio.Plateau.add_player(plateau, player_name)}
   end
 
   defp reschedule do
