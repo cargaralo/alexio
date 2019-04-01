@@ -56,20 +56,23 @@ socket.connect()
 
 let channel           = socket.channel("room:lobby", {})
 let chatInput         = document.querySelector("#chat-input")
-let messagesContainer = document.querySelector("#messages")
+let playerContainer = document.querySelector("#player")
+let plateauContainer = document.querySelector("#plateau")
 
 chatInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
-    channel.push("new_msg", {body: chatInput.value})
+    channel.push("new_player", {player_name: chatInput.value})
+    localStorage.setItem('player_name', chatInput.value);
     chatInput.value = ""
+    playerContainer.innerHTML = `Your name is <b>${localStorage.getItem('player_name')}</b>`
+    chatInput.remove()
   }
 })
 
-channel.on("new_msg", payload => {
-  console.log(payload)
-  let messageItem = document.createElement("li")
-  messageItem.innerText = `[${Date()}] ${payload.players}`
-  messagesContainer.appendChild(messageItem)
+channel.on("beat", payload => {
+  let plateauItem = document.createElement("li")
+  plateauContainer.innerHTML = `[${Date()}]</br> X: ${payload.x_size}</br> Y: ${payload.y_size}</br> Players: ${JSON.stringify(payload.players)}`
+  // messagesContainer.appendChild(messageItem)
 })
 
 channel.join()

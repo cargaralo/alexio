@@ -10,14 +10,18 @@ defmodule Alexio.Plateau do
     if player_name_owned?(plateau, player_name) do
       {:error, plateau}
     else
-      players = Map.put(plateau.players, player_name, player_name)
-      positions = Map.put(plateau.positions, {0, 0}, player_name)
+      new_player = Alexio.Player.init(player_name, 0, 0)
+
+      players = Map.put(plateau.players, new_player.name, new_player)
+      positions = Map.put(plateau.positions, {new_player.x_position, new_player.y_position}, player_name)
 
       {:ok, %__MODULE__{plateau | players: players, positions: positions}}
     end
   end
 
   def player_name_owned?(plateau = %__MODULE__{}, player_name) do
-    Map.has_key?(plateau.players, player_name)
+    # Map.has_key?(plateau.players, player_name)
+    #TODO
+    false
   end
 end

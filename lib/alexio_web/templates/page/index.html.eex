@@ -1,2 +1,4 @@
-<div id="messages"></div>
+<div id="player"></div>
+<br/>
+<div id="plateau"></div>
 <input id="chat-input" type="text"></input>

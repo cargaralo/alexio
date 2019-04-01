@@ -11,13 +11,18 @@ defmodule Alexio.Beat do
   end
 
   def handle_info(:beat, plateau) do
-    AlexioWeb.Endpoint.broadcast!("room:lobby", "new_msg", plateau)
+    AlexioWeb.Endpoint.broadcast!("room:lobby", "beat", plateau)
     reschedule()
+    {:noreply, plateau}
+  end
+
+  def handle_cast(:beat, plateau) do
     {:noreply, plateau}
   end
 
   def handle_call({:new_player, player_name}, _from, plateau) do
     {status, plateau} = Alexio.Plateau.add_player(plateau, player_name)
+
     {:reply, status, plateau}
   end
 
