@@ -2,7 +2,7 @@ defmodule AlexioWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", AlexioWeb.RoomChannel
+  channel "room:*", AlexioWeb.RoomChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
