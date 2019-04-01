@@ -16,8 +16,9 @@ defmodule Alexio.Beat do
     {:noreply, plateau}
   end
 
-  def handle_cast({:new_player, player_name}, plateau) do
-    {:noreply, Alexio.Plateau.add_player(plateau, player_name)}
+  def handle_call({:new_player, player_name}, _from, plateau) do
+    {status, plateau} = Alexio.Plateau.add_player(plateau, player_name)
+    {:reply, status, plateau}
   end
 
   defp reschedule do
