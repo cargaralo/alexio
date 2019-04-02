@@ -11,9 +11,11 @@ defmodule Alexio.Beat do
   end
 
   def handle_info(:beat, plateau) do
-    AlexioWeb.Endpoint.broadcast!("room:lobby", "beat", plateau)
+    updated_plateau = Alexio.Plateau.update_status(plateau)
+    AlexioWeb.Endpoint.broadcast!("room:lobby", "beat", updated_plateau)
+
     reschedule()
-    {:noreply, plateau}
+    {:noreply, updated_plateau}
   end
 
   def handle_cast(:beat, plateau) do
@@ -22,6 +24,12 @@ defmodule Alexio.Beat do
 
   def handle_call({:new_player, player_name}, _from, plateau) do
     {status, plateau} = Alexio.Plateau.add_player(plateau, player_name)
+
+    {:reply, status, plateau}
+  end
+
+  def handle_call({:move_player, player_name, direction}, _from, plateau) do
+    {status, plateau} = Alexio.Plateau.move_player(plateau, player_name, direction)
 
     {:reply, status, plateau}
   end

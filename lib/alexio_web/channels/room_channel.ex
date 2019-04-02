@@ -15,4 +15,11 @@ defmodule AlexioWeb.RoomChannel do
       :error -> {:reply, :error, socket}
     end
   end
+
+  def handle_in("move_player", %{"player_name" => player_name, "direction" => direction}, socket) do
+    case GenServer.call(Alexio.Beat, {:move_player, player_name, direction}) do
+      :ok -> {:reply, :ok, socket}
+      :error -> {:reply, :error, socket}
+    end
+  end
 end

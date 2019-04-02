@@ -59,6 +59,19 @@ let chatInput         = document.querySelector("#chat-input")
 let playerContainer = document.querySelector("#player")
 let plateauContainer = document.querySelector("#plateau")
 
+document.onkeydown = function(event) {
+  const player_name = localStorage.getItem('player_name')
+  if (event.keyCode === 37) {
+    channel.push("move_player", {player_name: player_name, direction: "LEFT"})
+  }else if (event.keyCode === 38) {
+    channel.push("move_player", {player_name: player_name, direction: "UP"})
+  }else if (event.keyCode === 39) {
+    channel.push("move_player", {player_name: player_name, direction: "RIGHT"})
+  }else if (event.keyCode === 40) {
+    channel.push("move_player", {player_name: player_name, direction:  "DOWN"})
+  }
+}
+
 chatInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
     channel.push("new_player", {player_name: chatInput.value})
